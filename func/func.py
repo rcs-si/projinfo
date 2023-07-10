@@ -69,6 +69,7 @@ args = parser.parse_args()
 #save the arguments
 function = args.arg1
 print('input function:', function)
+
 if args.optional:
     func_input = args.optional
     print('input func input:', func_input)
@@ -83,7 +84,7 @@ functions = {
 call = functions.get(function) #use .get to avoid KeyError
 
 if call:
-    if 'func_inputs' in globals(): #check for secondary input
+    if 'func_input' in locals(): #check for secondary input
         call(func_input)
     else:
         call()
