@@ -1,5 +1,5 @@
 '''
-going to put all the cli code here
+i dont think i need this actually but ill leave it here j in case
 '''
 
 from argparse import ArgumentParser
