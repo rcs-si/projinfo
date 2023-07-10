@@ -81,7 +81,7 @@ functions = {
     'semester': semester
 }
 
-call = functions.get(function) #use .get to avoid KeyError
+call = functions.get(function) #use .get() to avoid KeyError
 
 if call:
     if 'func_input' in locals(): #check for secondary input
