@@ -29,4 +29,9 @@ setup(
         "License ::", #i dont know what license to put i think people usually use the MIT one but idk since this isnt a personal thing im distributing
         "Operating System :: OS Independent",
     ],
+    entry_points={
+        "console_scripts": [
+            "function = func.func:main",
+        ]
+    }
 )
