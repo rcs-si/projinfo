@@ -25,12 +25,14 @@ And perform basic queries for common questions like:
     Anything else the Apps Team wants.
 
 ## working notes (from lindsay)
-current status
-     using pandas to filter through the csv files
-     using argparse to take inputs
-     currently parsing copied versions of the csv files, so they wont update
+current status:
 
-questions
-     what exactly is in each csv:
-         how can i tell if someone is a admin contact (no in the PI csv?)
-     not sure how to turn this into an accessible tool
+    using pandas to filter through the csv files:
+    using argparse to take inputs
+    currently parsing copied versions of the csv files, so they wont update
+
+questions:
+
+    what exactly is in each csv:
+    how can i tell if someone is a admin contact (no in the PI csv?)
+    not sure how to turn this into an accessible tool
