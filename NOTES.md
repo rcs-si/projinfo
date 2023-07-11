@@ -14,6 +14,6 @@ not sure how to fix this, and i think part of the issue is because i am working 
 
 ### questions:
 
-what exactly is in each csv:
-how can i tell if someone is a admin contact (no in the PI csv?)
-not sure how to turn this into an accessible tool
+- what exactly is in each csv:
+- how can i tell if someone is a admin contact (no in the PI csv?)
+- not sure how to turn this into an accessible tool
