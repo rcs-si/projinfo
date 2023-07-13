@@ -4,13 +4,12 @@
 
 ### current status:
 
-using pandas to filter through the csv files:
-using argparse to take inputs
-currently parsing copied versions of the csv files, so they wont update
-i am able to pip install . the package, but im getting this error:
-    WARNING: The script function is installed in '/usr4/ugrad/tinglliu/.local/bin' which is not on PATH.
-    Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
-not sure how to fix this, and i think part of the issue is because i am working on scc?
+    using pandas to filter through the csv files:
+    using argparse to take inputs
+    currently parsing copied versions of the csv files, so they wont update
+
+    turning script into executable
+    fix prefixes, come up w better names?
 
 ### questions:
 
