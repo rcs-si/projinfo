@@ -30,9 +30,10 @@ def proj_users(projname): #list the user information for projectname Project
 
 def pi_projs(pi_login): #list the group + projects for which LPI is either the LPI or Admin Contact
 
-    filtered = pi_df[pi_df['login'] == pi_login]
+    pi_filtered = pi_df[pi_df['login'] == pi_login]
+    admin_filtered = pi_df[pi_df['alogin'] == pi_login]
 
-    projects = filtered[['group', 'title']]
+    projects = pd.concat([pi_filtered[['group', 'title']], admin_filtered[['group', 'title']]])
 
     print(projects)
     return projects
