@@ -14,7 +14,6 @@ pi_df = pd.read_csv('pidb.csv')
 user_labels = ['proj', 'user', 'date']
 user_df.columns = user_labels
 
-print(pi_df.head(10))
 """
 currently takes in a project name as a
 command line argument and prints out all

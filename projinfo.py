@@ -8,19 +8,19 @@ def main():
     '''
     #create parser + define arguments
     parser = ArgumentParser(description='tool to return information about current projects and PIs') #not sure where this description will show up so idk what to put here lol
-    parser.add_argument('arg1', help='function name: proj_users, pi_projs, semester')
-    parser.add_argument('-o', '--optional', help='input for functions that require it: project name for proj_users, PI name for pi_projs')
+    parser.add_argument('function', help='function name: proj_users, pi_projs, semester')
+    parser.add_argument('-i', '--input', help='input for functions that require it: project name for proj_users, PI name for pi_projs')
 
     #take in command line arguments
     args = parser.parse_args()
 
     #save the arguments
     function = args.arg1
-    print('input function:', function)
+    #print('input function:', function)
 
-    if args.optional:
-        func_input = args.optional
-        print('input func input:', func_input)
+    if args.input:
+        func_input = args.input
+        #print('input func input:', func_input)
 
     #dictionary to map different functions
     functions = {
