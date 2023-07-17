@@ -1,19 +1,43 @@
-'''
-i dont think i need this actually but ill leave it here j in case
-'''
+from func.functions import proj_users, pi_projs, semester
 
-from argparse import ArgumentParser
-import pandas as pd
+def main():
+    '''
+    adding the arg parse code here!
+    - use dictionary to map inputs to functions
+    '''
+    #create parser + define arguments
+    parser = ArgumentParser(description='tool to return information about current projects and PIs') #not sure where this description will show up so idk what to put here lol
+    parser.add_argument('arg1', help='function name: proj_users, pi_projs, semester')
+    parser.add_argument('--optional', help='project name for proj_users, PI name for pi_projs')
 
-parser = ArgumentParser(description='hello')
+    #take in command line arguments
+    args = parser.parse_args()
 
-user_df = pd.read_csv('projuser.csv')
-pi_df = pd.read_csv('pidb.csv')
+    #save the arguments
+    function = args.arg1
+    print('input function:', function)
 
-user_labels = ['proj', 'user', 'date']
-user_df.columns = user_labels
+    if args.optional:
+        func_input = args.optional
+        print('input func input:', func_input)
 
-#print(pi_df.tail(10))
-#print(user_df.tail(10))
-#projname = str(sys.argv[1])
+    #dictionary to map different functions
+    functions = {
+        'proj_users': proj_users,
+        'pi_projs': pi_projs,
+        'semester': semester
+    }
+
+    call = functions.get(function) #use .get() to avoid KeyError
+
+    if call:
+        if 'func_input' in locals(): #check for secondary input
+            call(func_input)
+        else:
+            call()
+    else:
+        print("invalid input")
+
+if __name__ == '__main__':
+    main()
 

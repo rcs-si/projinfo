@@ -1,1 +1,1 @@
-from .func import proj_users, pi_projs, semester
+from .functions import proj_users, pi_projs, semester
