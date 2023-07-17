@@ -1,3 +1,4 @@
+from argparse import ArgumentParser #take in sys arg
 from func.functions import proj_users, pi_projs, semester
 
 def main():

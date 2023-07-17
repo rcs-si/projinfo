@@ -1,7 +1,6 @@
 #come up with better function names lmfao
 
 import pandas as pd #pandas to parse csv
-from argparse import ArgumentParser #take in sys arg
 
 '''
 import the two csv files
@@ -15,6 +14,7 @@ pi_df = pd.read_csv('pidb.csv')
 user_labels = ['proj', 'user', 'date']
 user_df.columns = user_labels
 
+print(pi_df.head(10))
 """
 currently takes in a project name as a
 command line argument and prints out all
@@ -53,45 +53,3 @@ def semester(): #not sure how to determine the semesters active project, but i'm
     print(filtered.head(1))
     projects = filtered[['group', 'title']]
     return projects
-
-#****************************************************************************************#
-def main():
-    '''
-    adding the arg parse code here!
-    - use dictionary to map inputs to functions
-    '''
-    #create parser + define arguments
-    parser = ArgumentParser(description='tool to return information about current projects and PIs') #not sure where this description will show up so idk what to put here lol
-    parser.add_argument('arg1', help='function name: proj_users, pi_projs, semester')
-    parser.add_argument('--optional', help='project name for proj_users, PI name for pi_projs')
-
-    #take in command line arguments
-    args = parser.parse_args()
-
-    #save the arguments
-    function = args.arg1
-    print('input function:', function)
-
-    if args.optional:
-        func_input = args.optional
-        print('input func input:', func_input)
-
-    #dictionary to map different functions
-    functions = {
-        'proj_users': proj_users,
-        'pi_projs': pi_projs,
-        'semester': semester
-    }
-
-    call = functions.get(function) #use .get() to avoid KeyError
-
-    if call:
-        if 'func_input' in locals(): #check for secondary input
-            call(func_input)
-        else:
-            call()
-    else:
-        print("invalid input")
-
-if __name__ == '__main__':
-    main()
