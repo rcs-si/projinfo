@@ -9,7 +9,7 @@ def main():
     #create parser + define arguments
     parser = ArgumentParser(description='tool to return information about current projects and PIs') #not sure where this description will show up so idk what to put here lol
     parser.add_argument('arg1', help='function name: proj_users, pi_projs, semester')
-    parser.add_argument('--optional', help='project name for proj_users, PI name for pi_projs')
+    parser.add_argument('-o', '--optional', help='input for functions that require it: project name for proj_users, PI name for pi_projs')
 
     #take in command line arguments
     args = parser.parse_args()
