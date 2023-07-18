@@ -52,3 +52,10 @@ def semester(): #not sure how to determine the semesters active project, but i'm
     print(filtered.head(1))
     projects = filtered[['group', 'title']]
     return projects
+
+#def proj_pi(project): #given project, returns PI and admin contact
+
+
+#def user_pis(username): #given a user, returns the projects (and PI for that project) that user is part of
+#    projects = user_df[user_df['user'] == username]
+
