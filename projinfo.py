@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from argparse import ArgumentParser #take in sys arg
 from helpers import *
     #proj_users, pi_projs, semester, proj_pi, user_pis
