@@ -1,7 +1,12 @@
 from argparse import ArgumentParser #take in sys arg
-from func.functions import proj_users, pi_projs, semester
+from helpers import *
+    #proj_users, pi_projs, semester, proj_pi, user_pis
 
-def parse(): #parse arguments, returns input in a dictionary
+def main(): #parse arguments, returns input in a dictionary
+    '''
+    once i add more queries i think i'll create a dictionary of inputs and corresponding outputs
+    currently 
+    '''
     #create parser + define arguments
     parser = ArgumentParser(description='tool to return information about current projects and PIs') #not sure where this description will show up so idk what to put here lol
     parser.add_argument('-p', '--project', help='Project name')
@@ -12,14 +17,27 @@ def parse(): #parse arguments, returns input in a dictionary
     args = parser.parse_args()
 
     #create a dictionary of all the flags
-    flagsDict = vars(args)
+    inputs = vars(args)  #this should automatically set the flags with no input to None
+    print(inputs)
+
+    #process the flags and print their outputs?
+    #curently have no set output for combinations of flags, so multiple flags will print each corresponding individual output
+
+    for flag, value in inputs.items():
+        if value is not None:
+            if flag == 'project':
+                print(proj_pi(value))
+                print(proj_users(value))
+            if flag == 'user':
+                print(user_pis(value))
+            if flag == 'semester':
+                print(semester())
+            if flag == 'lpi':
+                print(pi_projs(value))
 
 
-    for key, value in flagsDict.items():
-        if value is None:
-            flagsDict[key] = None
-    
-    return flagsDict
+if __name__ == "__main__":
+    main()
 
 
 
@@ -30,15 +48,14 @@ def parse(): #parse arguments, returns input in a dictionary
 
 
 
-
-'''
+''' 
 def main():
     '''
-    '''
+'''
     adding the arg parse code here!
     - use dictionary to map inputs to functions
     '''
-    '''
+'''
     #create parser + define arguments
     parser = ArgumentParser(description='tool to return information about current projects and PIs') #not sure where this description will show up so idk what to put here lol
     parser.add_argument('function', help='function name: proj_users, pi_projs, semester')
