@@ -8,8 +8,8 @@ currently importing copies i made into my own directory
 in the future i should import directly from source so
 the data stays updated
 '''
-user_df = pd.read_csv('projuser.csv')
-pi_df = pd.read_csv('pidb.csv')
+user_df = pd.read_csv('data/projuser.csv')
+pi_df = pd.read_csv('data/pidb.csv')
 
 user_labels = ['proj', 'user', 'date']
 user_df.columns = user_labels
