@@ -1,4 +1,8 @@
 # working notes (from lindsay)
+### 07/23/23
+    notes:
+    updated semester to properly return all currently active course projects
+
 ### 07/20/23:
     notes:
     turned script into an executable
