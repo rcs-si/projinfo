@@ -44,14 +44,13 @@ def semester(): #not sure how to determine the semesters active project, but i'm
 
     also not sure what info the apps team needs back, so currently returning everything
     '''
-    activity = (pi_df['status'] == 'active')
-    #academic = (pi_df['academic'] == "")
-
-    filtered = pi_df[activity]
+    filtered = pi_df[(pi_df['status'] == 'active') & (pi_df['academic'] == 'course')]
     pd.set_option('display.max_columns', None)
-    print(filtered.head(1))
+    #print(filtered)
     projects = filtered[['group', 'title']]
     return projects
+
+    
 
 def proj_pi(project): #given project, returns PI and admin contact
     filtered = pi_df[pi_df['group'] == project]
@@ -72,6 +71,5 @@ def user_pis(username): #given a user, returns the projects (and PI for that pro
         result = pd.concat([result, proj_pi(project)], ignore_index = True)
     
     return result
-
 
 
