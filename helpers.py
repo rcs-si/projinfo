@@ -14,6 +14,8 @@ pi_df = pd.read_csv('data/pidb.csv')
 user_labels = ['proj', 'user', 'date']
 user_df.columns = user_labels
 
+print(pi_df.head(10))
+
 """
 currently takes in a project name as a
 command line argument and prints out all
@@ -72,4 +74,4 @@ def user_pis(username): #given a user, returns the projects (and PI for that pro
     
     return result
 
-
+print(user_pis('tinglliu'))
