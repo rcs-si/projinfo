@@ -1,4 +1,11 @@
 # working notes (from lindsay)
+### 08/01/23
+    working on:
+    user interface: error messages for invalid inputs
+    if they put in multiple tags, return the first tag and make a note that the secondary tag is ignored
+    for -u: change column names, instead of NaN j return blank
+    for -p: get rid of group column, add new column that is blank except to indicate who is lpi/admin contact, indicate whether or not it is academic, display allocation
+
 ### 07/23/23
     notes:
     updated semester to properly return all currently active course projects
