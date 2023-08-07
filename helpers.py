@@ -29,17 +29,19 @@ def proj_users(project): #list the user information for projectname Project
         print(filtered)
         return filtered
     else:
-        return('Error: Input valid porject name')
+        return('Error: Input valid project name')
 
 def pi_projs(pi_login): #list the group + projects for which LPI is either the LPI or Admin Contact
+    if (pi_login in pi_df['login'].values) or (pi_login in pi_df['alogin'].values):
+        pi_filtered = pi_df[pi_df['login'] == pi_login]
+        admin_filtered = pi_df[pi_df['alogin'] == pi_login]
 
-    pi_filtered = pi_df[pi_df['login'] == pi_login]
-    admin_filtered = pi_df[pi_df['alogin'] == pi_login]
+        projects = pd.concat([pi_filtered[['group', 'title']], admin_filtered[['group', 'title']]])
 
-    projects = pd.concat([pi_filtered[['group', 'title']], admin_filtered[['group', 'title']]])
-
-    print(projects)
-    return projects
+        print(projects)
+        return projects
+    else:
+        return('Error: Input valid login')
 
 def semester(): #not sure how to determine the semesters active project, but i'm assuming its any project that is currently active.
     '''
@@ -67,13 +69,14 @@ def proj_pi(project): #given project, returns PI and admin contact
 
 
 def user_pis(username): #given a user, returns the projects (and PI for that project) that user is part of
-    projects = user_df[user_df['user'] == username]
+    if username in user_df['user'].values:
+        projects = user_df[user_df['user'] == username]
 
-    result = pd.DataFrame()
+        result = pd.DataFrame()
 
-    for project in projects['proj']:
-        result = pd.concat([result, proj_pi(project)], ignore_index = True)
-    
-    return result
-
-print(user_pis('tinglliu'))
+        for project in projects['proj']:
+            result = pd.concat([result, proj_pi(project)], ignore_index = True)
+        
+        return result
+    else:
+        return("Error: Input valid user login")
