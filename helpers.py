@@ -8,13 +8,13 @@ currently importing copies i made into my own directory
 in the future i should import directly from source so
 the data stays updated
 '''
-user_df = pd.read_csv('data/projuser.csv')
-pi_df = pd.read_csv('data/pidb.csv')
+user_df = pd.read_csv('/projectnb/rcsmetrics/pidb/data/projuser.csv', encoding='latin-1')
+pi_df = pd.read_csv('/projectnb/rcsmetrics/pidb/data/pidb.csv', encoding='latin-1')
 
 user_labels = ['proj', 'user', 'date']
 user_df.columns = user_labels
 
-print(pi_df.head(10))
+#print(pi_df.head(10))
 
 """
 currently takes in a project name as a
