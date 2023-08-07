@@ -23,11 +23,13 @@ the users associated with that project
 """
  
 def proj_users(project): #list the user information for projectname Project
+    if project in user_df['proj'].values:
+        filtered = user_df[user_df['proj'] == project]
 
-    filtered = user_df[user_df['proj'] == project]
-
-    print(filtered)
-    return filtered
+        print(filtered)
+        return filtered
+    else:
+        return('Error: Input valid porject name')
 
 def pi_projs(pi_login): #list the group + projects for which LPI is either the LPI or Admin Contact
 
