@@ -20,13 +20,14 @@ def main(): #parse arguments, returns input in a dictionary
 
     #create a dictionary of all the flags
     inputs = vars(args)  #this should automatically set the flags with no input to None
-    print(inputs)
 
     #process the flags and print their outputs?
     #curently have no set output for combinations of flags, so multiple flags will print each corresponding individual output
 
+    flag1 = True
     for flag, value in inputs.items():
-        if value is not None:
+        if value is not None and flag1 == True:
+            flag1 = False
             if flag == 'project':
                 print(proj_pi(value))
                 print(proj_users(value))
@@ -36,6 +37,8 @@ def main(): #parse arguments, returns input in a dictionary
                 print(semester())
             if flag == 'lpi':
                 print(pi_projs(value))
+        elif value is not None and flag1 != True:
+            print("All secondary inputs will be ignored")
 
 
 if __name__ == "__main__":
