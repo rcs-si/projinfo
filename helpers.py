@@ -26,9 +26,29 @@ def proj_users(project): #list the user information for projectname Project
     if project in user_df['proj'].values:
         filtered = user_df[user_df['proj'] == project]
 
-        return filtered.fillna('')
+        result = filtered[['user', 'date']]
+
+        return result.fillna('')
     else:
         return('Error: Input valid project name')
+
+def proj_info(project): #given project, returns PI and admin contact
+    filtered = pi_df[pi_df['group'] == project]
+
+    cols = ['group', 'login', 'alogin', 'academic', 'allocation']
+
+    ['Project/Group', 'PI Login', 'Admin Login']
+
+    new_columns = {'group': 'Project/Group', 'login': 'PI Login', 'alogin': 'Admin Login'}
+
+    #i was trying to filter out the NaN alogin values but i think i'll just keep them in
+    #filtered = filtered.dropna(subset=cols, inplace=True)
+
+    result = filtered[cols]
+    result = result.rename(columns=new_columns).fillna('No')
+    return result
+
+
 
 def pi_projs(pi_login): #list the group + projects for which LPI is either the LPI or Admin Contact
     if (pi_login in pi_df['login'].values) or (pi_login in pi_df['alogin'].values):

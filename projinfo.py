@@ -41,7 +41,8 @@ def main(): #parse arguments, returns input in a dictionary
 
             if value is not None and input1 == True:
                 if flag == ('p' or 'project'):
-                    print(proj_pi(value))
+                    print(proj_info(value))
+                    print('')
                     print(proj_users(value))
                 if flag == ('u' or 'user'):
                     print(user_pis(value))
