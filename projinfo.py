@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-
+import sys
 from argparse import ArgumentParser #take in sys arg
 from helpers import *
     #proj_users, pi_projs, semester, proj_pi, user_pis
@@ -22,23 +22,34 @@ def main(): #parse arguments, returns input in a dictionary
     inputs = vars(args)  #this should automatically set the flags with no input to None
 
     #process the flags and print their outputs?
-    #curently have no set output for combinations of flags, so multiple flags will print each corresponding individual output
+    #multiple inputs will only process the first one. 
+    input1 = True
+    #for flag, value in inputs.items():
+    for i in range(1, len(sys.argv)-1):  # Start from index 1 to skip script name
+        arg = sys.argv[i]
+        #print(arg)
+        if arg.startswith('-'):
+            flag = arg.lstrip('-')
+            #print(flag)
+            #value = getattr(args, flag)
+            value = sys.argv[i+1]
+            #print (value)
+            #print(input1)
 
-    flag1 = True
-    for flag, value in inputs.items():
-        if value is not None and flag1 == True:
-            flag1 = False
-            if flag == 'project':
-                print(proj_pi(value))
-                print(proj_users(value))
-            if flag == 'user':
-                print(user_pis(value))
-            if flag == 'semester':
-                print(semester())
-            if flag == 'lpi':
-                print(pi_projs(value))
-        elif value is not None and flag1 != True:
-            print("All secondary inputs will be ignored")
+            if input1 == False:
+                print("All secondary inputs will be ignored")
+
+            if value is not None and input1 == True:
+                if flag == ('p' or 'project'):
+                    print(proj_pi(value))
+                    print(proj_users(value))
+                if flag == ('u' or 'user'):
+                    print(user_pis(value))
+                if flag == ('s' or 'semester'):
+                    print(semester())
+                if flag == ('pi' or 'lpi'):
+                    print(pi_projs(value))
+                input1 = False
 
 
 if __name__ == "__main__":
