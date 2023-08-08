@@ -37,7 +37,7 @@ def proj_info(project): #given project, returns PI and admin contact
 
     cols = ['group', 'login', 'alogin', 'academic', 'allocation']
 
-    ['Project/Group', 'PI Login', 'Admin Login']
+    ['Project/Group', 'PI-Login', 'Admin-Login']
 
     new_columns = {'group': 'Project/Group', 'login': 'PI Login', 'alogin': 'Admin Login'}
 
