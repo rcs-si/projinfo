@@ -26,7 +26,7 @@ def proj_users(project): #list the user information for projectname Project
     if project in user_df['proj'].values:
         filtered = user_df[user_df['proj'] == project]
 
-        return filtered
+        return filtered.fillna('', inplace=True)
     else:
         return('Error: Input valid project name')
 
@@ -75,6 +75,7 @@ def user_pis(username): #given a user, returns the projects (and PI for that pro
         for project in projects['proj']:
             result = pd.concat([result, proj_pi(project)], ignore_index = True)
         
-        return result
+        filtered = result.fillna('')
+        return filtered
     else:
         return("Error: Input valid user login")
