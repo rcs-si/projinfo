@@ -21,28 +21,33 @@ currently takes in a project name as a
 command line argument and prints out all
 the users associated with that project
 """
- 
-def proj_users(project): #list the user information for projectname Project
+def proj(project): #one function to call in projinfo.py
     if project in user_df['proj'].values:
-        filtered = user_df[user_df['proj'] == project]
-
-        result = filtered[['user', 'date']]
-
-        return result.fillna('').to_string(index=False)
+        result = proj_info(project)
+        result += proj_users(project)
+        return result
     else:
-        return('Error: Input valid project name')
+        return('Invalid project name')
 
-def proj_info(project): #given project, returns PI and admin contact
+def proj_users(project): #list the user information for projectname Project
+
+    filtered = user_df[user_df['proj'] == project]
+
+    result = filtered[['user', 'date']]
+
+    return result.fillna('').to_string(index=False)
+
+
+def proj_info(project): #given project, returns info (helper for -p)
+
     filtered = pi_df[pi_df['group'] == project]
 
     cols = ['group', 'login', 'alogin', 'academic', 'allocation', 'dept', 'center', 'college']
 
-    ['Project/Group', 'PI-Login', 'Admin-Login']
-
     new_columns = {'group': 'Project/Group', 'login': 'PI-Login', 'alogin': 'Admin-Login'}
 
-    #i was trying to filter out the NaN alogin values but i think i'll just keep them in
-    #filtered = filtered.dropna(subset=cols, inplace=True)
+        #i was trying to filter out the NaN alogin values but i think i'll just keep them in
+        #filtered = filtered.dropna(subset=cols, inplace=True)
 
     result = filtered[cols]
     result = result.rename(columns=new_columns).fillna('No')
@@ -59,7 +64,7 @@ def pi_projs(pi_login): #list the group + projects for which LPI is either the L
 
         return projects.to_string(index=False)
     else:
-        return('Error: Input valid login')
+        return('Invalid user name')
 
 def semester(): #not sure how to determine the semesters active project, but i'm assuming its any project that is currently active.
     '''
@@ -105,4 +110,4 @@ def user_pis(username): #given a user, returns the projects (and PI for that pro
         filtered = result.fillna('')
         return filtered.to_string(index=False)
     else:
-        return("Error: Input valid user login")
+        return("Invalid user name")
