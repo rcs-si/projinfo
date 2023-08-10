@@ -28,7 +28,7 @@ def proj_users(project): #list the user information for projectname Project
 
         result = filtered[['user', 'date']]
 
-        return result.fillna('')
+        return result.fillna('').to_string(index=False)
     else:
         return('Error: Input valid project name')
 
@@ -46,7 +46,7 @@ def proj_info(project): #given project, returns PI and admin contact
 
     result = filtered[cols]
     result = result.rename(columns=new_columns).fillna('No')
-    return result
+    return result.to_string(index=False)
 
 
 
@@ -57,7 +57,7 @@ def pi_projs(pi_login): #list the group + projects for which LPI is either the L
 
         projects = pd.concat([pi_filtered[['group', 'title']], admin_filtered[['group', 'title']]])
 
-        return projects
+        return projects.to_string(index=False)
     else:
         return('Error: Input valid login')
 
@@ -72,7 +72,7 @@ def semester(): #not sure how to determine the semesters active project, but i'm
     pd.set_option('display.max_columns', None)
     #print(filtered)
     projects = filtered[['group', 'title']]
-    return projects
+    return projects.to_string(index=False)
 
     
 
@@ -90,7 +90,7 @@ def proj_pi(project): #given project, returns PI and admin contact
 
     result = filtered[cols]
     result = result.rename(columns=new_columns)
-    return result
+    return result #.to_string(index=False)
 
 
 def user_pis(username): #given a user, returns the projects (and PI for that project) that user is part of
@@ -103,6 +103,6 @@ def user_pis(username): #given a user, returns the projects (and PI for that pro
             result = pd.concat([result, proj_pi(project)], ignore_index = True)
         
         filtered = result.fillna('')
-        return filtered
+        return filtered.to_string(index=False)
     else:
         return("Error: Input valid user login")
