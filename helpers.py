@@ -35,11 +35,11 @@ def proj_users(project): #list the user information for projectname Project
 def proj_info(project): #given project, returns PI and admin contact
     filtered = pi_df[pi_df['group'] == project]
 
-    cols = ['group', 'login', 'alogin', 'academic', 'allocation']
+    cols = ['group', 'login', 'alogin', 'academic', 'allocation', 'dept', 'center', 'college']
 
     ['Project/Group', 'PI-Login', 'Admin-Login']
 
-    new_columns = {'group': 'Project/Group', 'login': 'PI Login', 'alogin': 'Admin Login'}
+    new_columns = {'group': 'Project/Group', 'login': 'PI-Login', 'alogin': 'Admin-Login'}
 
     #i was trying to filter out the NaN alogin values but i think i'll just keep them in
     #filtered = filtered.dropna(subset=cols, inplace=True)

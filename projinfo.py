@@ -25,6 +25,9 @@ def main(): #parse arguments, returns input in a dictionary
     #multiple inputs will only process the first one. 
     input1 = True
     #for flag, value in inputs.items():
+
+    #if len(sys.argv) == 1:
+
     for i in range(1, len(sys.argv)-1):  # Start from index 1 to skip script name
         arg = sys.argv[i]
         #print(arg)
@@ -35,6 +38,7 @@ def main(): #parse arguments, returns input in a dictionary
             value = sys.argv[i+1]
             #print (value)
             #print(input1)
+
 
             if input1 == False:
                 print("All secondary inputs will be ignored")
