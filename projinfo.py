@@ -30,6 +30,7 @@ def main(): #parse arguments, returns input in a dictionary
     args = parser.parse_args()
     if args.academic:
         print(semester())
+        input1 = False
 
     for i in range(1, len(sys.argv)-1):  # Start from index 1 to skip script name
         arg = sys.argv[i]
