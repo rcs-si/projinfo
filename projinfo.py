@@ -11,7 +11,7 @@ def main(): #parse arguments, returns input in a dictionary
     '''
     #create parser + define arguments
     parser = ArgumentParser(description='tool to return information about current projects and PIs') #not sure where this description will show up so idk what to put here lol
-    parser.add_argument('-a', '--academic', help='No input necessary')
+    parser.add_argument('-a', '--academic', action='store_true', help='No input necessary')
     parser.add_argument('-u', '--user', help='User login name')
     parser.add_argument('-s', '--semester', help='Current semesters projects')
     parser.add_argument('-pi', '--lpi', help='PI login name')
@@ -27,29 +27,26 @@ def main(): #parse arguments, returns input in a dictionary
     #for flag, value in inputs.items():
 
     #if len(sys.argv) == 1:
+    args = parser.parse_args()
+    if args.academic:
+        print(semester())
 
     for i in range(1, len(sys.argv)-1):  # Start from index 1 to skip script name
         arg = sys.argv[i]
-        #print(arg)
+
         if arg.startswith('-'):
-            flag = arg.lstrip('-')
-            #print(flag)
-            #value = getattr(args, flag)
-            value = sys.argv[i+1]
-            #print (value)
-            #print(input1)
-
-
             if input1 == False:
                 print("All secondary inputs will be ignored")
+
+            flag = arg.lstrip('-')
+            
+            value = sys.argv[i+1]
 
             if value is not None and input1 == True:
                 if flag == ('p' or 'project'):
                     print(proj(value))
                 if flag == ('u' or 'user'):
                     print(user_pis(value))
-                if flag == ('s' or 'semester'):
-                    print(semester())
                 if flag == ('pi' or 'lpi'):
                     print(pi_projs(value))
                 input1 = False
