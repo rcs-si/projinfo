@@ -26,12 +26,13 @@ def main(): #parse arguments, returns input in a dictionary
 
     #if len(sys.argv) == 1:
 
-
-    args = parser.parse_args()
-
     if len(sys.argv) == 1:
         parser.print_help()
         sys.exit()
+
+    args = parser.parse_args()
+    if args.academic:
+        print(academic())
 
     for i in range(1, len(sys.argv)-1):  # Start from index 1 to skip script name
         arg = sys.argv[i]
