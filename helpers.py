@@ -14,8 +14,6 @@ pi_df = pd.read_csv('/projectnb/rcsmetrics/pidb/data/pidb.csv', encoding='latin-
 user_labels = ['proj', 'user', 'date']
 user_df.columns = user_labels
 
-#print(pi_df.head(10))
-
 """
 currently takes in a project name as a
 command line argument and prints out all
@@ -24,8 +22,9 @@ the users associated with that project
 def proj(project): #one function to call in projinfo.py
     if project in user_df['proj'].values:
         result = proj_info(project)
+        result += '\n\n'
         result += proj_users(project)
-        return result8999
+        return result
     else:
         return('Invalid project name')
 
@@ -37,6 +36,11 @@ def proj_users(project): #list the user information for projectname Project
 
     return result.fillna('').to_string(index=False)
 
+def num_users(row): #number of users in a project, currently helper for academic flag
+    project = row['group']
+    filtered = user_df[user_df['proj'] == project]
+
+    return len(filtered)
 
 def proj_info(project): #given project, returns info (helper for -p)
 
@@ -44,13 +48,13 @@ def proj_info(project): #given project, returns info (helper for -p)
 
     cols = ['group', 'login', 'alogin', 'academic', 'allocation', 'dept', 'center', 'college']
 
-    new_columns = {'group': 'Project', 'login': 'LPI', 'alogin': 'Admin'}
+    new_columns = {'group': 'Project', 'login': 'LPI', 'alogin': 'Admin', 'allocation': 'SU_Allocation'}
 
         #i was trying to filter out the NaN alogin values but i think i'll just keep them in
         #filtered = filtered.dropna(subset=cols, inplace=True)
 
     result = filtered[cols]
-    result = result.rename(columns=new_columns).fillna('No')
+    result = result.rename(columns=new_columns).fillna('')
     return result.to_string(index=False)
 
 
@@ -79,6 +83,7 @@ def academic(): #not sure how to determine the semesters active project, but i'm
     projects = filtered[['group', 'title', 'login', 'alogin', 'dept', 'campus']]
     new_columns = {'group': 'Project', 'login': 'LPI', 'alogin': 'Admin'}
 
+    projects['#Users'] = project.apply(num_users, axis = 1)
     return projects.rename(columns=new_columns).fillna('').to_string(index=False)
 
     
@@ -113,5 +118,3 @@ def user_pis(username): #given a user, returns the projects (and PI for that pro
         return filtered.to_string(index=False)
     else:
         return("Invalid user name")
-
-
