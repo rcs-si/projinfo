@@ -44,7 +44,7 @@ def proj_info(project): #given project, returns info (helper for -p)
 
     cols = ['group', 'login', 'alogin', 'academic', 'allocation', 'dept', 'center', 'college']
 
-    new_columns = {'group': 'Project/Group', 'login': 'PI_Login', 'alogin': 'Admin_Login'}
+    new_columns = {'group': 'Project', 'login': 'LPI', 'alogin': 'Admin'}
 
         #i was trying to filter out the NaN alogin values but i think i'll just keep them in
         #filtered = filtered.dropna(subset=cols, inplace=True)
@@ -88,7 +88,7 @@ def proj_pi(project): #given project, returns PI and admin contact
 
     ['Project/Group', 'PI Login', 'Admin Login']
 
-    new_columns = {'group': 'Project/Group', 'login': 'PI_Login', 'alogin': 'Admin_Login'}
+    new_columns = {'group': 'Project', 'login': 'LPI', 'alogin': 'Admin'}
 
     #i was trying to filter out the NaN alogin values but i think i'll just keep them in
     #filtered = filtered.dropna(subset=cols, inplace=True)
