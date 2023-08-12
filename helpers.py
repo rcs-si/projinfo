@@ -61,10 +61,12 @@ def proj_info(project): #given project, returns info (helper for -p)
 
 def pi_projs(pi_login): #list the group + projects for which LPI is either the LPI or Admin Contact
     if (pi_login in pi_df['login'].values) or (pi_login in pi_df['alogin'].values):
-        pi_filtered = pi_df[pi_df['login'] == pi_login]
-        admin_filtered = pi_df[pi_df['alogin'] == pi_login]
+        pi_filtered = pi_df[pi_df['login'] == pi_login].copy()
+        pi_filtered.loc[:,'PI/Admin?'] = 'PI'
+        admin_filtered = pi_df[pi_df['alogin'] == pi_login].copy()
+        admin_filtered.loc[:,'PI/Admin?'] = "Admin"
 
-        projects = pd.concat([pi_filtered[['group', 'title']], admin_filtered[['group', 'title']]])
+        projects = pd.concat([pi_filtered[['group', 'title', 'PI/Admin?']], admin_filtered[['group', 'title', 'PI/Admin?']]])
 
         return projects.to_string(index=False)
     else:
