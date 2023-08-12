@@ -16,21 +16,22 @@ def main(): #parse arguments, returns input in a dictionary
     parser.add_argument('-s', '--semester', help='Current semesters projects')
     parser.add_argument('-pi', '--lpi', help='PI login name')
 
-    args = parser.parse_args()
 
-    #create a dictionary of all the flags
-    inputs = vars(args)  #this should automatically set the flags with no input to None
+    #create a dictionary of all the flags, not used 
+    #inputs = vars(args)  #this should automatically set the flags with no input to None
 
     #process the flags and print their outputs?
     #multiple inputs will only process the first one. 
     input1 = True
-    #for flag, value in inputs.items():
 
     #if len(sys.argv) == 1:
+
+
     args = parser.parse_args()
-    if args.academic:
-        print(academic())
-        input1 = False
+
+    if len(sys.argv) == 1:
+        parser.print_help()
+        sys.exit()
 
     for i in range(1, len(sys.argv)-1):  # Start from index 1 to skip script name
         arg = sys.argv[i]
