@@ -1,12 +1,9 @@
-#come up with better function names lmfao
+#come up with better function names lmfao + organize this entire file....
 
 import pandas as pd #pandas to parse csv
 
 '''
 import the two csv files
-currently importing copies i made into my own directory
-in the future i should import directly from source so
-the data stays updated
 '''
 user_df = pd.read_csv('/projectnb/rcsmetrics/pidb/data/projuser.csv', encoding='latin-1')
 pi_df = pd.read_csv('/projectnb/rcsmetrics/pidb/data/pidb.csv', encoding='latin-1')

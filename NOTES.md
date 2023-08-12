@@ -1,4 +1,13 @@
 # working notes (from lindsay)
+### 08/12/23
+    working on:
+    adding unit tests
+    
+    notes:
+    "semester" flag updated to "academic"
+    added/renamed output columns
+    removed indicies from output for clarity
+
 ### 08/01/23
     working on:
     user interface: error messages for invalid inputs
