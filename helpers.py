@@ -25,7 +25,7 @@ def proj(project): #one function to call in projinfo.py
     if project in user_df['proj'].values:
         result = proj_info(project)
         result += proj_users(project)
-        return result
+        return result8999
     else:
         return('Invalid project name')
 
@@ -44,7 +44,7 @@ def proj_info(project): #given project, returns info (helper for -p)
 
     cols = ['group', 'login', 'alogin', 'academic', 'allocation', 'dept', 'center', 'college']
 
-    new_columns = {'group': 'Project/Group', 'login': 'PI-Login', 'alogin': 'Admin-Login'}
+    new_columns = {'group': 'Project/Group', 'login': 'PI_Login', 'alogin': 'Admin_Login'}
 
         #i was trying to filter out the NaN alogin values but i think i'll just keep them in
         #filtered = filtered.dropna(subset=cols, inplace=True)
@@ -88,7 +88,7 @@ def proj_pi(project): #given project, returns PI and admin contact
 
     ['Project/Group', 'PI Login', 'Admin Login']
 
-    new_columns = {'group': 'Project/Group', 'login': 'PI Login', 'alogin': 'Admin Login'}
+    new_columns = {'group': 'Project/Group', 'login': 'PI_Login', 'alogin': 'Admin_Login'}
 
     #i was trying to filter out the NaN alogin values but i think i'll just keep them in
     #filtered = filtered.dropna(subset=cols, inplace=True)
@@ -111,3 +111,5 @@ def user_pis(username): #given a user, returns the projects (and PI for that pro
         return filtered.to_string(index=False)
     else:
         return("Invalid user name")
+
+
