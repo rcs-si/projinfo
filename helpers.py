@@ -83,7 +83,7 @@ def academic(): #not sure how to determine the semesters active project, but i'm
     projects = filtered[['group', 'title', 'login', 'alogin', 'dept', 'campus']]
     new_columns = {'group': 'Project', 'login': 'LPI', 'alogin': 'Admin'}
 
-    projects['#Users'] = project.apply(num_users, axis = 1)
+    projects['#Users'] = projects.apply(num_users, axis = 1)
     return projects.rename(columns=new_columns).fillna('').to_string(index=False)
 
     
