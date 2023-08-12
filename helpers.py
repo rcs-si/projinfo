@@ -66,7 +66,7 @@ def pi_projs(pi_login): #list the group + projects for which LPI is either the L
     else:
         return('Invalid user name')
 
-def semester(): #not sure how to determine the semesters active project, but i'm assuming its any project that is currently active.
+def academic(): #not sure how to determine the semesters active project, but i'm assuming its any project that is currently active.
     '''
     working on getting it to print active academic projects, but having problems filtering out the "academic" column
     currently just returns all currently active projects
@@ -76,8 +76,10 @@ def semester(): #not sure how to determine the semesters active project, but i'm
     filtered = pi_df[(pi_df['status'] == 'active') & (pi_df['academic'] == 'course')]
     pd.set_option('display.max_columns', None)
     #print(filtered)
-    projects = filtered[['group', 'title']]
-    return projects.to_string(index=False)
+    projects = filtered[['group', 'title', 'login', 'alogin', 'dept', 'campus']]
+    new_columns = {'group': 'Project', 'login': 'LPI', 'alogin': 'Admin'}
+
+    return projects.rename(columns=new_columns).fillna('').to_string(index=False)
 
     
 
