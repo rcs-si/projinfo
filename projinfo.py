@@ -13,7 +13,7 @@ def main(): #parse arguments, returns input in a dictionary
     parser = ArgumentParser(description='tool to return information about current projects and PIs') #not sure where this description will show up so idk what to put here lol
     parser.add_argument('-a', '--academic', action='store_true', help='No input necessary')
     parser.add_argument('-u', '--user', help='User login name')
-    parser.add_argument('-s', '--semester', help='Current semesters projects')
+    parser.add_argument('-p', '--project', help='Projects info')
     parser.add_argument('-pi', '--lpi', help='PI login name')
 
 

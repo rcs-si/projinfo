@@ -79,7 +79,7 @@ def academic(): #not sure how to determine the semesters active project, but i'm
     filtered = pi_df[(pi_df['status'] == 'active') & (pi_df['academic'] == 'course')]
     pd.set_option('display.max_columns', None)
     #print(filtered)
-    projects = filtered[['group', 'title', 'login', 'alogin', 'dept', 'campus']]
+    projects = filtered[['group', 'title', 'login', 'alogin', 'dept', 'campus']].copy()
     new_columns = {'group': 'Project', 'login': 'LPI', 'alogin': 'Admin'}
 
     projects['#Users'] = projects.apply(num_users, axis = 1)
