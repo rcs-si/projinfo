@@ -15,6 +15,7 @@ def main(): #parse arguments, returns input in a dictionary
     parser.add_argument('-u', '--user', help='User login name')
     parser.add_argument('-p', '--project', help='Projects info')
     parser.add_argument('-pi', '--lpi', help='PI login name')
+    parser.add_argument('-v', '--v', action='store_true', help="add to -u or -p for additional info")
 
 
     #create a dictionary of all the flags, not used 
@@ -49,7 +50,11 @@ def main(): #parse arguments, returns input in a dictionary
                 if flag == ('p' or 'project'):
                     print(proj(value))
                 if flag == ('u' or 'user'):
-                    print(user_pis(value))
+                    if len(sys.argv) > (i+2):
+                        if sys.argv[i+2] == '-v':
+                            print(vuser_pis(value))
+                    else:    
+                        print(user_pis(value))
                 if flag == ('pi' or 'lpi'):
                     print(pi_projs(value))
                 input1 = False

@@ -52,7 +52,7 @@ def proj_info(project): #given project, returns info (helper for -p)
 
     result = filtered[cols]
     result = result.rename(columns=new_columns).fillna('')
-    return result.to_string(index=False)
+    return result #.to_string(index=False)
 
 
 
@@ -117,3 +117,21 @@ def user_pis(username): #given a user, returns the projects (and PI for that pro
         return filtered.to_string(index=False)
     else:
         return("Invalid user name")
+
+def vuser_pis(username): #given a user, returns the projects (and PI for that project) that user is part of
+    if username in user_df['user'].values:
+        projects = user_df[user_df['user'] == username]
+
+        result = pd.DataFrame()
+
+        for project in projects['proj']:
+            result = pd.concat([result, proj_info(project)], ignore_index = True)
+        
+        filtered = result.fillna('')
+        return filtered.to_string(index=False)
+    else:
+        return("Invalid user name")
+    
+#print(proj_info('rcs-intern'))
+print()
+print(vuser_pis('ktrn'))
