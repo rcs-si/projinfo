@@ -56,7 +56,11 @@ def main(): #parse arguments, returns input in a dictionary
                     else:    
                         print(user_pis(value))
                 if flag == ('pi' or 'lpi'):
-                    print(pi_projs(value))
+                    if len(sys.argv) > (i+2):
+                        if sys.argv[i+2] == '-v':
+                            print(vpi_projs(value))
+                    else:
+                        print(pi_projs(value))
                 input1 = False
 
 

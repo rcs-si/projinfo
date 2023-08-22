@@ -18,7 +18,7 @@ the users associated with that project
 """
 def proj(project): #one function to call in projinfo.py
     if project in user_df['proj'].values:
-        result = proj_info(project)
+        result = proj_info(project).to_string(index=False)
         result += '\n\n'
         result += proj_users(project)
         return result
@@ -131,7 +131,16 @@ def vuser_pis(username): #given a user, returns the projects (and PI for that pr
         return filtered.to_string(index=False)
     else:
         return("Invalid user name")
-    
-#print(proj_info('rcs-intern'))
-print()
-print(vuser_pis('ktrn'))
+
+def vpi_projs(pi_login): #list the group + projects for which LPI is either the LPI or Admin Contact
+    if (pi_login in pi_df['login'].values) or (pi_login in pi_df['alogin'].values):
+        pi_filtered = pi_df[pi_df['login'] == pi_login].copy()
+        pi_filtered.loc[:,'PI/Admin?'] = 'PI'
+        admin_filtered = pi_df[pi_df['alogin'] == pi_login].copy()
+        admin_filtered.loc[:,'PI/Admin?'] = "Admin"
+
+        projects = pd.concat([pi_filtered[['group', 'title', 'PI/Admin?', 'dept', 'campus']], admin_filtered[['group', 'title', 'PI/Admin?', 'dept', 'campus']]])
+        projects['#Users'] = projects.apply(num_users, axis = 1)
+        return projects.to_string(index=False)
+    else:
+        return('Invalid user name')
