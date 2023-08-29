@@ -68,7 +68,10 @@ def pi_projs(pi_login): #list the group + projects for which LPI is either the L
 
         return projects.to_string(index=False)
     else:
-        return('Invalid user name')
+        if pi_login in user_df['user'].values:
+            return('This user is not a PI')
+        else:    
+            return('Invalid user name')
 
 def academic(): #not sure how to determine the semesters active project, but i'm assuming its any project that is currently active.
     '''
