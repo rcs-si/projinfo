@@ -148,3 +148,12 @@ def vpi_projs(pi_login): #list the group + projects for which LPI is either the 
         return projects.to_string(index=False)
     else:
         return('Invalid user name')
+
+
+def is_empty():
+    if user_df.empty or pi_df.empty:
+        return True
+    else:
+        return False
+
+#def exists():
