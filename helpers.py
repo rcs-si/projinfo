@@ -61,7 +61,8 @@ def pi_projs(pi_login): #list the group + projects for which LPI is either the L
         pi_filtered = pi_df[pi_df['login'] == pi_login].copy()
         pi_filtered.loc[:,'PI/Admin?'] = 'PI'
         admin_filtered = pi_df[pi_df['alogin'] == pi_login].copy()
-        admin_filtered.loc[:,'PI/Admin?'] = "Admin"
+        #admin_filtered.loc[:,'PI/Admin?'] = "Admin"
+        admin_filtered['PI/Admin?'] = "Admin"
 
         projects = pd.concat([pi_filtered[['group', 'title', 'PI/Admin?']], admin_filtered[['group', 'title', 'PI/Admin?']]])
 
