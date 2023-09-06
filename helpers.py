@@ -64,7 +64,7 @@ def pi_projs(pi_login): #list the group + projects for which LPI is either the L
         #admin_filtered.loc[:,'PI/Admin?'] = "Admin"
         admin_filtered['PI/Admin?'] = "Admin"
 
-        projects = pd.concat([pi_filtered[['group', 'title', 'PI/Admin?']], admin_filtered[['group', 'title', 'PI/Admin?']]])
+        projects = pd.concat([pi_filtered[['group', 'title', 'PI/Admin']], admin_filtered[['group', 'title', 'PI/Admin']]])
 
         return projects.to_string(index=False)
     else:
@@ -143,7 +143,7 @@ def vpi_projs(pi_login): #list the group + projects for which LPI is either the 
         admin_filtered = pi_df[pi_df['alogin'] == pi_login].copy()
         admin_filtered.loc[:,'PI/Admin?'] = "Admin"
 
-        projects = pd.concat([pi_filtered[['group', 'title', 'PI/Admin?', 'dept', 'campus']], admin_filtered[['group', 'title', 'PI/Admin?', 'dept', 'campus']]])
+        projects = pd.concat([pi_filtered[['group', 'title', 'PI/Admin', 'dept', 'campus']], admin_filtered[['group', 'title', 'PI/Admin', 'dept', 'campus']]])
         projects['#Users'] = projects.apply(num_users, axis = 1)
         return projects.to_string(index=False)
     else:
