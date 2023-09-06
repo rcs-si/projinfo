@@ -6,8 +6,8 @@ from helpers import *
 
 def main(): #parse arguments, returns input in a dictionary
     '''
-    once i add more queries i think i'll create a dictionary of inputs and corresponding outputs
-    currently 
+    this is parsing the input index by index so that i can only output for the first given input
+    doing as this as oppposed to storing in a dictionary
     '''
     #create parser + define arguments
     parser = ArgumentParser(description='tool to return information about current projects and PIs') #not sure where this description will show up so idk what to put here lol
@@ -23,7 +23,8 @@ def main(): #parse arguments, returns input in a dictionary
 
     #process the flags and print their outputs?
     #multiple inputs will only process the first one. 
-    input1 = True
+
+    input1 = True #change to false once the first argument has been parsed
 
     if is_empty() == True:
         print('The data file is empty')
