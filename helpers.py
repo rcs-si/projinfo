@@ -1,5 +1,5 @@
 #come up with better function names lmfao + organize this entire file....
-
+from os.path import exists
 import pandas as pd #pandas to parse csv
 
 '''
@@ -150,10 +150,22 @@ def vpi_projs(pi_login): #list the group + projects for which LPI is either the 
         return('Invalid user name')
 
 
-def is_empty():
-    if user_df.empty or pi_df.empty:
+def file_issues():
+    def is_empty(): #checks if either file is empty (bug in the database scripts)
+        if user_df.empty or pi_df.empty:
+            return True
+        else:
+            return False
+
+    def dne(): #checks if the file paths exist (should catch is anything is renamed, etc)
+        user = exists('/projectnb/rcsmetrics/pidb/data/projuser.csv')
+        pi = exists('/projectnb/rcsmetrics/pidb/data/pidb.csv')
+        if user or pi:
+            return True
+        else:
+            return False
+
+    if if_empty() or dne():
         return True
     else:
         return False
-
-#def exists():

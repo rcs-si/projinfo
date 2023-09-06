@@ -26,7 +26,7 @@ def main(): #parse arguments, returns input in a dictionary
 
     input1 = True #change to false once the first argument has been parsed
 
-    if is_empty() == True:
+    if file_issues() == True:
         print('The data file is empty')
         exit()
     #if len(sys.argv) == 1:
