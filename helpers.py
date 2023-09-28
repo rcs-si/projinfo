@@ -165,7 +165,7 @@ def file_issues():
         else:
             return False
 
-    if if_empty() or dne():
+    if is_empty() or dne():
         return True
     else:
         return False
