@@ -161,9 +161,9 @@ def file_issues():
         user = exists('/projectnb/rcsmetrics/pidb/data/projuser.csv')
         pi = exists('/projectnb/rcsmetrics/pidb/data/pidb.csv')
         if user or pi:
-            return True
-        else:
             return False
+        else:
+            return True
 
     if is_empty() or dne():
         return True
