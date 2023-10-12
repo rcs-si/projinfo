@@ -1,7 +1,7 @@
 #come up with better function names lmfao + organize this entire file....
 from os.path import exists
 import pandas as pd #pandas to parse csv
-
+from pandas import read_csv
 '''
 import the two csv files
 '''
