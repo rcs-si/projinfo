@@ -85,27 +85,6 @@ foreach my $login (keys %pi_data) {
 }
 =cut
 
-=begin
-#function to return values given username
-sub user_info {
-    my ($username, %hash) = @_;
-    my %filtered_data;
-
-
-    #foreach my $username (keys %user_data)
-    foreach my $key (keys %hash) {
-        #print"$hash{$key}\n";
-        #if ($hash{$key}->{username} eq $username) {
-        if ($key eq $username) {
-            $filtered_data{$key} = $hash{$key};
-            #print$key;
-        }
-    }
-
-    return %filtered_data;
-}
-=cut
-
 
 sub user_info {
     my ($username, %hash) = @_;
