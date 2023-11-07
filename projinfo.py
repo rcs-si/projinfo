@@ -28,7 +28,7 @@ def main(): #parse arguments, returns input in a dictionary
 
     if file_issues() == True:
         print('The data file is empty')
-        exit()
+        sys.exit()
     #if len(sys.argv) == 1:
 
     if len(sys.argv) == 1:
@@ -38,6 +38,7 @@ def main(): #parse arguments, returns input in a dictionary
     args = parser.parse_args()
     if args.academic:
         print(academic())
+        sys.exit()
 
     for i in range(1, len(sys.argv)-1):  # Start from index 1 to skip script name
         arg = sys.argv[i]
@@ -45,6 +46,7 @@ def main(): #parse arguments, returns input in a dictionary
         if arg.startswith('-'):
             if input1 == False:
                 print("All secondary inputs will be ignored")
+                sys.exit()
 
             flag = arg.lstrip('-')
             

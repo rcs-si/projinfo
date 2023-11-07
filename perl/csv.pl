@@ -61,6 +61,8 @@ my (
 }
 close(N);
 
+#test print user csv
+=begin
 foreach my $username (keys %user_data) {
     print "Username: $username\n";
     print "Group: $user_data{$username}->{group}\n";
@@ -68,9 +70,37 @@ foreach my $username (keys %user_data) {
     print "\n";
 }
 
+#test print pi csv
 foreach my $login (keys %pi_data) {
     print "Login: $login\n";
     print "Group: $pi_data{$login}->{group}\n";
     print "Title: $pi_data{$login}->{title}\n";
+    print "\n";
+}
+=cut
+
+#function to return values given username
+sub user_info {
+    my ($username, %hash) = @_;
+    my %filtered_data;
+
+    foreach my $key (keys %hash) {
+        print"$hash{$key}\n";
+        if ($hash{$key}->{username} eq $username) {
+            $filtered_data{$key} = $hash{$key};
+            print$key;
+        }
+    }
+
+    return %filtered_data;
+}
+
+my $input_username = 'ktrn';
+my %filtered_result = user_info($input_username, %user_data);
+
+foreach my $key (keys %filtered_result) {
+    print "Username: $key\n";
+    print "Group: $filtered_result{$key}->{group}\n";
+    print "Title: $filtered_result{$key}->{title}\n";
     print "\n";
 }
