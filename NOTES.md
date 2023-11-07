@@ -1,4 +1,14 @@
 # working notes (from lindsay)
+### 11/07/23
+    oops ive been slacking on updating this my bad
+    working on:
+    rewriting everything in perl
+    
+    notes:
+    so much faster !!!
+    currently reimplementing functions one-by-one
+    havent really thought about parsing in inputs, i read something about a .pm perl module?? not sure 
+    
 ### 08/12/23
     working on:
     adding unit tests
