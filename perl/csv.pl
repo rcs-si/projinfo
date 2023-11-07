@@ -113,12 +113,11 @@ sub user_proj { #given username, returns the projects that user is in
 }
 
 sub academic {
-    my $active_string = "active";
+    my $active_string = "\"active\"";
     my %filtered_academic;
     foreach my $key (keys %pi_data) {
         my $academic_status = $pi_data{$key}->{academic};
-        #print"$academic_status\n";
-        if ($academic_status eq "active") {
+        if ($academic_status eq $active_string) {
             print"hi\n";
             $filtered_academic{$key} = $pi_data{$key};
         }
