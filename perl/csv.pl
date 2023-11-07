@@ -10,6 +10,9 @@ if ($ARGV[0] eq "-csv") {
 }
 my %properties = ();
 my $host = "";
+
+
+my $index = 0;
 open(M, $user_df) or die "can't open $user_df: $!";
 while (my $line = <M>) {
     chomp $line;
@@ -18,12 +21,14 @@ while (my $line = <M>) {
 
     my ($group, $username, $date) = split(',', $line);
 
-    $user_data{$username}->{group} = $group;
-    $user_data{$username}->{date} = $date;
+    $user_data{$index}->{username} = $username;    
+    $user_data{$index}->{group} = $group;
+    $user_data{$index}->{date} = $date;
+    $index++;
 }
 close(M);
 
-
+my $index = 0;
 open(N, $pi_df) or die "can't open $pi_df: $!";
 while (my $line = <N>) {
     chomp $line;
@@ -63,12 +68,13 @@ close(N);
 
 #test print user csv
 =begin
-foreach my $username (keys %user_data) {
-    print "Username: $username\n";
-    print "Group: $user_data{$username}->{group}\n";
-    print "Date: $user_data{$username}->{date}\n";
+foreach my $index (keys %user_data) {
+    print "Username: $user_data{$index}->{username}\n";
+    print "Group: $user_data{$index}->{group}\n";
+    print "Date: $user_data{$index}->{date}\n";
     print "\n";
 }
+
 
 #test print pi csv
 foreach my $login (keys %pi_data) {
@@ -79,28 +85,51 @@ foreach my $login (keys %pi_data) {
 }
 =cut
 
+=begin
 #function to return values given username
 sub user_info {
     my ($username, %hash) = @_;
     my %filtered_data;
 
+
+    #foreach my $username (keys %user_data)
     foreach my $key (keys %hash) {
-        print"$hash{$key}\n";
+        #print"$hash{$key}\n";
+        #if ($hash{$key}->{username} eq $username) {
+        if ($key eq $username) {
+            $filtered_data{$key} = $hash{$key};
+            #print$key;
+        }
+    }
+
+    return %filtered_data;
+}
+=cut
+
+
+sub user_info {
+    my ($username, %hash) = @_;
+    my %filtered_data;
+
+    foreach my $key (keys %hash) {
+        #print"$hash{$key}\n";
         if ($hash{$key}->{username} eq $username) {
             $filtered_data{$key} = $hash{$key};
-            print$key;
+            #print$key;
         }
     }
 
     return %filtered_data;
 }
 
+
 my $input_username = 'ktrn';
 my %filtered_result = user_info($input_username, %user_data);
 
+print"$input_username \n";
 foreach my $key (keys %filtered_result) {
-    print "Username: $key\n";
+    #print "Username: $filtered_result{$key}->{username}\n";
     print "Group: $filtered_result{$key}->{group}\n";
-    print "Title: $filtered_result{$key}->{title}\n";
+    print "Title: $filtered_result{$key}->{date}\n";
     print "\n";
 }
