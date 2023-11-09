@@ -112,6 +112,10 @@ sub user_proj { #given username, returns the projects that user is in
     return %filtered_data;
 }
 
+sub user_flag { #
+
+}
+
 sub academic {
     my $active_string = "\"active\"";
     my %filtered_academic;
