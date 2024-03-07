@@ -1,6 +1,7 @@
 # projinfo
 A command-line tool that allows a quick info about the project
 
+Next step: convert it
 
 ## email from Charlie
 
