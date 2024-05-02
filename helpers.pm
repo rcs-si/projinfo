@@ -256,21 +256,23 @@ sub count_user {
     return $count;
 }
 
-sub user_pis() {
+sub user_pis {
     my ($user) = @_;
     my $user_proj;
     my @info_lines;
 
+    # Check for user's project in the user data
     foreach my $row (@user_data) {
         if ($row->{'user'} eq $user) {
             $user_proj = $row->{'proj'};
-            last;
+            last;  # Exit the loop once the user's project is found
         }
     }
-    if (!defined($user_proj)){
-        return;  # Returns from the function if $user_proj is undefined
-    }
 
+    # Handle case where the project is not found for the user
+    return "No project found for user $user\n" unless defined $user_proj;
+
+    # Columns to be displayed with their new headings
     my @selected_cols = qw(group login alogin);
     my %new_column_names = (
         group => 'Project',
@@ -278,55 +280,116 @@ sub user_pis() {
         alogin => 'Admin'
     );
 
-    # Initialize column widths based on the header names
+    # Initialize column widths to the length of the new headings
     my %column_widths;
-    for my $col (@selected_cols) {
+    foreach my $col (@selected_cols) {
         $column_widths{$col} = length($new_column_names{$col} // $col);
     }
 
-    # Only one loop to process rows and format them
+    # Process rows from pi_data where group matches user_proj
     foreach my $row (@pi_data) {
-        next unless $row->{'group'} eq $user_proj; # Skip rows that do not match the project
+        next unless $row->{'group'} eq $user_proj;
 
         my @row_content;
-        for my $col (@selected_cols) {
+        foreach my $col (@selected_cols) {
             my $field = $row->{$col} // '';
             my $content_length = length($field);
             $column_widths{$col} = $content_length if $content_length > $column_widths{$col};
-            push @row_content, $field; # Save the original content for later use
+            push @row_content, $field;
         }
 
-        # Save the unformatted row for now
+        # Store the unformatted row content temporarily
         push @info_lines, \@row_content;
     }
 
-    # Now, adjust the headers based on the collected widths
+    # Prepare the header with left-aligned column names
     my $header_line = join(' ', map { sprintf("%*s", $column_widths{$_}, $new_column_names{$_} // $_) } @selected_cols);
-    unshift @info_lines, $header_line; # Add headers at the beginning
+    unshift @info_lines, $header_line;  # Add the formatted header at the beginning
 
-    # Format the rows with the final column widths
-    for my $i (1 .. $#info_lines) { # Start from 1 to skip the header
+    # Format each data row according to final column widths
+    for my $i (1 .. $#info_lines) {  # Start from index 1 to skip the header
         $info_lines[$i] = join(' ', map { sprintf("%*s", $column_widths{$selected_cols[$_]}, $info_lines[$i]->[$_]) } 0 .. $#{$info_lines[$i]});
     }
 
-    return join("\n", @info_lines, "\n");
+    # Combine the header and formatted rows into a single string output
+    return join("\n", @info_lines, "");  # Add an extra newline for separation
 }
 
-sub vuser_pis() {
+
+# sub vuser_pis() {
+#     my ($user) = @_;
+#     my $user_proj;
+#     my @info_lines;
+
+#     foreach my $row (@user_data) {
+#         if ($row->{'user'} eq $user) {
+#             $user_proj = $row->{'proj'};
+#             last;
+#         }
+#     }
+#     if (!defined($user_proj)){
+#         return;  # Returns from the function if $user_proj is undefined
+#     }
+
+#     my @selected_cols = qw(group login alogin academic allocation dept center college);
+#     my %new_column_names = (
+#         group => 'Project',
+#         login => 'LPI',
+#         alogin => 'Admin',
+#         allocation => 'SU_Allocation'
+#     );
+
+#     # Initialize column widths based on the header names
+#     my %column_widths;
+#     for my $col (@selected_cols) {
+#         $column_widths{$col} = length($new_column_names{$col} // $col);
+#     }
+
+#     # Only one loop to process rows and format them
+#     foreach my $row (@pi_data) {
+#         next unless $row->{'group'} eq $user_proj; # Skip rows that do not match the project
+
+#         my @row_content;
+#         for my $col (@selected_cols) {
+#             my $field = $row->{$col} // '';
+#             my $content_length = length($field);
+#             $column_widths{$col} = $content_length if $content_length > $column_widths{$col};
+#             push @row_content, $field; # Save the original content for later use
+#         }
+
+#         # Save the unformatted row for now
+#         push @info_lines, \@row_content;
+#     }
+
+#     # Now, adjust the headers based on the collected widths
+#     my $header_line = join(' ', map { sprintf("%*s", $column_widths{$_}, $new_column_names{$_} // $_) } @selected_cols);
+#     unshift @info_lines, $header_line; # Add headers at the beginning
+
+#     # Format the rows with the final column widths
+#     for my $i (1 .. $#info_lines) { # Start from 1 to skip the header
+#         $info_lines[$i] = join(' ', map { sprintf("%*s", $column_widths{$selected_cols[$_]}, $info_lines[$i]->[$_]) } 0 .. $#{$info_lines[$i]});
+#     }
+
+#     return join("\n", @info_lines, "\n");
+# }
+sub vuser_pis {
     my ($user) = @_;
     my $user_proj;
     my @info_lines;
 
+    # Find user's project
     foreach my $row (@user_data) {
         if ($row->{'user'} eq $user) {
             $user_proj = $row->{'proj'};
             last;
         }
     }
-    if (!defined($user_proj)){
-        return;  # Returns from the function if $user_proj is undefined
+    # Exit if user has no project
+    if (!defined($user_proj)) {
+        return "No project found for user $user\n";
     }
 
+    # Define columns to display and their new names
     my @selected_cols = qw(group login alogin academic allocation dept center college);
     my %new_column_names = (
         group => 'Project',
@@ -335,156 +398,183 @@ sub vuser_pis() {
         allocation => 'SU_Allocation'
     );
 
-    # Initialize column widths based on the header names
+    # Initialize column widths
     my %column_widths;
     for my $col (@selected_cols) {
         $column_widths{$col} = length($new_column_names{$col} // $col);
     }
 
-    # Only one loop to process rows and format them
+    # Gather data matching the user's project
     foreach my $row (@pi_data) {
-        next unless $row->{'group'} eq $user_proj; # Skip rows that do not match the project
+        next unless $row->{'group'} eq $user_proj;
 
         my @row_content;
         for my $col (@selected_cols) {
             my $field = $row->{$col} // '';
             my $content_length = length($field);
             $column_widths{$col} = $content_length if $content_length > $column_widths{$col};
-            push @row_content, $field; # Save the original content for later use
+            push @row_content, $field;  # Save field data
         }
-
-        # Save the unformatted row for now
-        push @info_lines, \@row_content;
+        push @info_lines, \@row_content;  # Save row data
     }
 
-    # Now, adjust the headers based on the collected widths
+    # Format headers and rows for output
     my $header_line = join(' ', map { sprintf("%*s", $column_widths{$_}, $new_column_names{$_} // $_) } @selected_cols);
-    unshift @info_lines, $header_line; # Add headers at the beginning
+    unshift @info_lines, $header_line;  # Insert header at the beginning
 
-    # Format the rows with the final column widths
-    for my $i (1 .. $#info_lines) { # Start from 1 to skip the header
+    # Format each data row according to column widths
+    for my $i (1 .. $#info_lines) {  # Skip header at index 0
         $info_lines[$i] = join(' ', map { sprintf("%*s", $column_widths{$selected_cols[$_]}, $info_lines[$i]->[$_]) } 0 .. $#{$info_lines[$i]});
     }
 
-    return join("\n", @info_lines, "\n");
+    return join("\n", @info_lines, "");  # Add newline for each row, including final one
 }
 
-sub pi_projs() {
+
+# sub pi_projs() {
+#     my ($lpi) = @_;
+#     my @user_projs;
+
+#     foreach my $row (@pi_data) {
+#         if ($row->{'login'} eq $lpi) {
+#             $row->{'PI/Admin?'} = "PI";
+#             push @user_projs, $row;
+#         }
+#         elsif ($row->{'alogin'} eq $lpi) {
+#             $row->{'PI/Admin?'} = "Admin";
+#             push @user_projs, $row;
+#         }
+#     }
+    
+#     if (scalar @user_projs == 0) {
+#         my $user_exists = 0;
+#         foreach my $user (@user_data) {
+#             if ($user->{'user'} eq $lpi) {
+#                 $user_exists = 1;
+#                 last;
+#             }
+#         }
+
+#         if ($user_exists) {
+#             return "This user is not a PI\n";
+#         } else {
+#             return "Invalid user name\n";
+#         }
+#     }
+#     # Selected column names
+#     my @selected_cols = qw(group title PI/Admin?);
+#     # Initialize column widths based on the header names and the data
+#     my %column_widths;
+#     for my $col (@selected_cols) {
+#         $column_widths{$col} = length($col);
+#         foreach my $row (@user_projs) {
+#             my $field_length = length($row->{$col});
+#             if ($field_length > $column_widths{$col}) {
+#                 $column_widths{$col} = $field_length;
+#             }
+#         }
+#     }
+
+#     # Format the header line, change the "%*s" to "%-*s" to format words start from left.
+#     my $header_line = join(' ', map { sprintf("%*s", $column_widths{$_}, $_) } @selected_cols);
+    
+#     # Format the rows
+#     my @formatted_rows;
+#     foreach my $row (@user_projs) {
+#         my $formatted_row = join(' ', map { sprintf("%*s", $column_widths{$_}, $row->{$_}) } @selected_cols);
+#         push @formatted_rows, $formatted_row;
+#     }
+
+#     # Combine header and rows
+#     return $header_line . "\n" . join("\n", @formatted_rows) . "\n";
+# }
+sub pi_projs {
     my ($lpi) = @_;
     my @user_projs;
 
+    # Check if user exists in the user data
+    my $user_exists = grep { $_->{'user'} eq $lpi } @user_data;
+    return "Invalid user name\n" unless $user_exists;
+
+    # Populate user projects based on login and admin login
     foreach my $row (@pi_data) {
-        if ($row->{'login'} eq $lpi) {
-            $row->{'PI/Admin?'} = "PI";
-            push @user_projs, $row;
-        }
-        elsif ($row->{'alogin'} eq $lpi) {
-            $row->{'PI/Admin?'} = "Admin";
+        if ($row->{'login'} eq $lpi or $row->{'alogin'} eq $lpi) {
+            $row->{'PI/Admin?'} = $row->{'login'} eq $lpi ? "PI" : "Admin";
             push @user_projs, $row;
         }
     }
     
-    if (scalar @user_projs == 0) {
-        my $user_exists = 0;
-        foreach my $user (@user_data) {
-            if ($user->{'user'} eq $lpi) {
-                $user_exists = 1;
-                last;
-            }
-        }
+    # Check if there are any projects associated with the user
+    return "This user is not a PI\n" if scalar @user_projs == 0;
 
-        if ($user_exists) {
-            return "This user is not a PI\n";
-        } else {
-            return "Invalid user name\n";
-        }
-    }
-    # Selected column names
+    # Columns to display
     my @selected_cols = qw(group title PI/Admin?);
-    # Initialize column widths based on the header names and the data
+
+    # Calculate maximum width for each column
     my %column_widths;
-    for my $col (@selected_cols) {
-        $column_widths{$col} = length($col);
+    foreach my $col (@selected_cols) {
+        my $max_width = length($col);
         foreach my $row (@user_projs) {
-            my $field_length = length($row->{$col});
-            if ($field_length > $column_widths{$col}) {
-                $column_widths{$col} = $field_length;
-            }
+            $max_width = length($row->{$col}) > $max_width ? length($row->{$col}) : $max_width;
         }
+        $column_widths{$col} = $max_width;
     }
 
-    # Format the header line, change the "%*s" to "%-*s" to format words start from left.
+    # Format the header line to be left-aligned
     my $header_line = join(' ', map { sprintf("%*s", $column_widths{$_}, $_) } @selected_cols);
     
-    # Format the rows
-    my @formatted_rows;
-    foreach my $row (@user_projs) {
-        my $formatted_row = join(' ', map { sprintf("%*s", $column_widths{$_}, $row->{$_}) } @selected_cols);
-        push @formatted_rows, $formatted_row;
-    }
+    # Format each row of project data
+    my @formatted_rows = map {
+        my $row = $_;
+        join(' ', map { sprintf("%*s", $column_widths{$_}, $row->{$_}) } @selected_cols)
+    } @user_projs;
 
-    # Combine header and rows
+    # Combine header and rows into a single string to return
     return $header_line . "\n" . join("\n", @formatted_rows) . "\n";
 }
+
 
 sub vpi_projs() {
     my ($lpi) = @_;
     my @user_projs;
 
+    # Check user existence
+    my $user_exists = grep { $_->{'user'} eq $lpi } @user_data;
+
+    # If user doesn't exist, skip processing
+    return "Invalid user name\n" unless $user_exists;
+
+    # Process projects
     foreach my $row (@pi_data) {
-        if ($row->{'login'} eq $lpi) {
-            $row->{'PI/Admin?'} = "PI";
-            $row->{'#Users'} = count_user($row->{'group'}, @user_data);
-            push @user_projs, $row;
-        }
-        elsif ($row->{'alogin'} eq $lpi) {
-            $row->{'PI/Admin?'} = "Admin";
+        if ($row->{'login'} eq $lpi or $row->{'alogin'} eq $lpi) {
+            $row->{'PI/Admin?'} = $row->{'login'} eq $lpi ? "PI" : "Admin";
             $row->{'#Users'} = count_user($row->{'group'}, @user_data);
             push @user_projs, $row;
         }
     }
-    
-    if (scalar @user_projs == 0) {
-        my $user_exists = 0;
-        foreach my $user (@user_data) {
-            if ($user->{'user'} eq $lpi) {
-                $user_exists = 1;
-                last;
-            }
-        }
 
-        if ($user_exists) {
-            return "This user is not a PI\n";
-        } else {
-            return "Invalid user name\n";
-        }
-    }
-    # Selected column names
-    # my @selected_cols = qw(group title PI/Admin? dept campus #Users);
+    # Handle case with no projects
+    return "This user is not a PI\n" if scalar @user_projs == 0;
+
+    # Column headers and width calculation
     my @selected_cols = ("group", "title", "PI/Admin?", "dept", "campus", "#Users");
-    # Initialize column widths based on the header names and the data
-    my %column_widths;
-    for my $col (@selected_cols) {
-        $column_widths{$col} = length($col);
-        foreach my $row (@user_projs) {
+    my %column_widths = map { $_ => length($_) } @selected_cols;
+    foreach my $row (@user_projs) {
+        foreach my $col (@selected_cols) {
             my $field_length = length($row->{$col});
-            if ($field_length > $column_widths{$col}) {
-                $column_widths{$col} = $field_length;
-            }
+            $column_widths{$col} = $field_length if $field_length > $column_widths{$col};
         }
     }
 
+    # Formatting headers and rows
     # Format the header line, change the "%*s" to "%-*s" to format words start from left.
     my $header_line = join(' ', map { sprintf("%*s", $column_widths{$_}, $_) } @selected_cols);
-    
-    # Format the rows
-    my @formatted_rows;
-    foreach my $row (@user_projs) {
-        my $formatted_row = join(' ', map { sprintf("%*s", $column_widths{$_}, $row->{$_}) } @selected_cols);
-        push @formatted_rows, $formatted_row;
-    }
+    my @formatted_rows = map {
+        my $row = $_;
+        join(' ', map { sprintf("%*s", $column_widths{$_}, $row->{$_}) } @selected_cols)
+    } @user_projs;
 
-    # Combine header and rows
+    # Output combined header and rows
     return $header_line . "\n" . join("\n", @formatted_rows) . "\n";
 }
 
