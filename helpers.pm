@@ -258,19 +258,18 @@ sub count_user {
 
 sub user_pis {
     my ($user) = @_;
-    my $user_proj;
+    my @user_projs;
     my @info_lines;
 
-    # Check for user's project in the user data
+    # Collect all projects associated with the user
     foreach my $row (@user_data) {
         if ($row->{'user'} eq $user) {
-            $user_proj = $row->{'proj'};
-            last;  # Exit the loop once the user's project is found
+            push @user_projs, $row->{'proj'};
         }
     }
 
-    # Handle case where the project is not found for the user
-    return "No project found for user $user\n" unless defined $user_proj;
+    # Handle case where no projects are found for the user
+    return "No projects found for user $user\n" unless @user_projs;
 
     # Columns to be displayed with their new headings
     my @selected_cols = qw(group login alogin);
@@ -286,10 +285,18 @@ sub user_pis {
         $column_widths{$col} = length($new_column_names{$col} // $col);
     }
 
-    # Process rows from pi_data where group matches user_proj
+    # Gather data matching any user projects
+    my @filtered_rows;
     foreach my $row (@pi_data) {
-        next unless $row->{'group'} eq $user_proj;
+        next unless grep { $_ eq $row->{'group'} } @user_projs;
+        push @filtered_rows, $row;
+    }
 
+    # Sort the filtered rows alphabetically by the project name
+    @filtered_rows = sort { $a->{'group'} cmp $b->{'group'} } @filtered_rows;
+
+    # Process the sorted rows
+    foreach my $row (@filtered_rows) {
         my @row_content;
         foreach my $col (@selected_cols) {
             my $field = $row->{$col} // '';
@@ -303,17 +310,18 @@ sub user_pis {
     }
 
     # Prepare the header with left-aligned column names
-    my $header_line = join(' ', map { sprintf("%*s", $column_widths{$_}, $new_column_names{$_} // $_) } @selected_cols);
+    my $header_line = join(' ', map { sprintf("%-*s", $column_widths{$_}, $new_column_names{$_} // $_) } @selected_cols);
     unshift @info_lines, $header_line;  # Add the formatted header at the beginning
 
     # Format each data row according to final column widths
     for my $i (1 .. $#info_lines) {  # Start from index 1 to skip the header
-        $info_lines[$i] = join(' ', map { sprintf("%*s", $column_widths{$selected_cols[$_]}, $info_lines[$i]->[$_]) } 0 .. $#{$info_lines[$i]});
+        $info_lines[$i] = join(' ', map { sprintf("%-*s", $column_widths{$selected_cols[$_]}, $info_lines[$i]->[$_]) } 0 .. $#{$info_lines[$i]});
     }
 
     # Combine the header and formatted rows into a single string output
     return join("\n", @info_lines, "");  # Add an extra newline for separation
 }
+
 
 
 # sub vuser_pis() {
@@ -374,20 +382,18 @@ sub user_pis {
 # }
 sub vuser_pis {
     my ($user) = @_;
-    my $user_proj;
+    my @user_projs;
     my @info_lines;
 
-    # Find user's project
+    # Collect all projects associated with the user
     foreach my $row (@user_data) {
         if ($row->{'user'} eq $user) {
-            $user_proj = $row->{'proj'};
-            last;
+            push @user_projs, $row->{'proj'};
         }
     }
-    # Exit if user has no project
-    if (!defined($user_proj)) {
-        return "No project found for user $user\n";
-    }
+
+    # Exit if user has no projects
+    return "No project found for user $user\n" unless @user_projs;
 
     # Define columns to display and their new names
     my @selected_cols = qw(group login alogin academic allocation dept center college);
@@ -404,10 +410,18 @@ sub vuser_pis {
         $column_widths{$col} = length($new_column_names{$col} // $col);
     }
 
-    # Gather data matching the user's project
+    # Gather data matching any of the user's projects
+    my @filtered_rows;
     foreach my $row (@pi_data) {
-        next unless $row->{'group'} eq $user_proj;
+        next unless grep { $_ eq $row->{'group'} } @user_projs;
+        push @filtered_rows, $row;
+    }
 
+    # Sort the filtered rows alphabetically by the project name
+    @filtered_rows = sort { $a->{'group'} cmp $b->{'group'} } @filtered_rows;
+
+    # Process the sorted rows
+    foreach my $row (@filtered_rows) {
         my @row_content;
         for my $col (@selected_cols) {
             my $field = $row->{$col} // '';
@@ -419,12 +433,12 @@ sub vuser_pis {
     }
 
     # Format headers and rows for output
-    my $header_line = join(' ', map { sprintf("%*s", $column_widths{$_}, $new_column_names{$_} // $_) } @selected_cols);
+    my $header_line = join(' ', map { sprintf("%-*s", $column_widths{$_}, $new_column_names{$_} // $_) } @selected_cols);
     unshift @info_lines, $header_line;  # Insert header at the beginning
 
     # Format each data row according to column widths
     for my $i (1 .. $#info_lines) {  # Skip header at index 0
-        $info_lines[$i] = join(' ', map { sprintf("%*s", $column_widths{$selected_cols[$_]}, $info_lines[$i]->[$_]) } 0 .. $#{$info_lines[$i]});
+        $info_lines[$i] = join(' ', map { sprintf("%-*s", $column_widths{$selected_cols[$_]}, $info_lines[$i]->[$_]) } 0 .. $#{$info_lines[$i]});
     }
 
     return join("\n", @info_lines, "");  # Add newline for each row, including final one
