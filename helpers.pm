@@ -103,9 +103,12 @@ sub proj {
     my $project_exists = grep { $_->{'proj'} eq $project } @user_data;
 
     unless ($project_exists) {
-        print "Could not find project. Available projects include:\n";
-        print join(', ', map { $_->{'proj'} // 'undefined' } @user_data) . "\n";
-        return "Invalid project name";
+        # print "Could not find project. Available projects include:\n";
+        # my %seen; #is used as a hash to track each project name and remove duplicates
+        # my @unique_projects = grep { !$seen{$_}++ } map { $_->{'proj'} // 'undefined' } @user_data;
+        # print join(', ', @unique_projects) . "\n";
+        # print "\n";
+        return "Could not found @_ project";
     }
 
     my $proj_info = proj_info($project);
